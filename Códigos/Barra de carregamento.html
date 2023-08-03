@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Barra de Carregamento Responsiva</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      background-color: transparent; /* Fundo transparente */
+    }
+
+    .progress-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh; /* Ocupar toda a altura da janela */
+      background-color: transparent; /* Fundo transparente */
+    }
+
+    .progress-bar-container {
+      width: 80%;
+      max-width: 400px;
+      background-color: #e0e0e0; /* Cor cinza para o fundo da barra */
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 30px;
+      width: 0;
+      background-color: #4CAF50; /* Cor verde para a barra de carregamento */
+      border-radius: 20px;
+      transition: width 5s ease-in-out;
+    }
+
+    .progress-text {
+      padding: 10px;
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+  <div class="progress-container">
+    <div class="progress-text">Carregando conversas...</div>
+    <div class="progress-bar-container">
+      <div class="progress-bar" id="myProgressBar"></div>
+    </div>
+  </div>
+
+  <script>
+    function startProgressBar() {
+      const progressBar = document.getElementById("myProgressBar");
+      let width = 0;
+      const interval = 5; // Total time for the progress bar to reach 100% (in seconds)
+      const increment = 100 / (interval * 10); // Increment per 100 milliseconds
+
+      const progressInterval = setInterval(() => {
+        width += increment;
+        progressBar.style.width = width + "%";
+        if (width >= 100) {
+          clearInterval(progressInterval);
+        }
+      }, 100);
+    }
+
+    startProgressBar();
+  </script>
+</body>
+</html>
