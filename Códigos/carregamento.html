@@ -21,7 +21,7 @@
       background-color: #FF8E21; /* Cor da barra de progresso alterada para #FF8E21 */
       opacity: 100; /* Opacidade da barra de progresso */
       width: 0; /* Define a largura inicial da barra de progresso como 0 */
-      animation: progressAnimation 8s forwards, changeColor 0.5s 6s forwards; /* Animação para a barra de progresso */
+      animation: progressAnimation 8s forwards, changeColor 2s 6s forwards; /* Animação para a barra de progresso */
       border-radius: 5px; /* Borda arredondada na barra de progresso */
       animation-delay: 2s; /* Atraso de 2 segundos antes do início da animação */
     }
@@ -41,8 +41,11 @@
       0% {
         background-color: #FF8E21; /* Cor inicial */
       }
+      80% {
+        background-color: #FF8E21; /* Mantém a cor #FF8E21 por 6 segundos */
+      }
       100% {
-        background-color: #00BB29; /* Cor final */
+        background-color: #00BB29; /* Cor final após 6 segundos */
       }
     }
   </style>
