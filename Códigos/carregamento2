@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>Barra de Progresso Responsiva</title>
   <style>
-    /* Estilos para o contêiner da barra de progresso */
     .progress-container {
       width: 80%; /* Largura do contêiner */
       max-width: 300px; /* Largura máxima do contêiner (pode ser ajustada) */
@@ -14,8 +13,6 @@
       box-sizing: border-box; /* Tornar o contêiner responsivo */
       border-radius: 10px; /* Borda arredondada no contêiner */
     }
-
-    /* Estilos para a barra de progresso */
     .progress-bar {
       height: 5px; /* Altura da barra de progresso */
       background-color: #000; /* Cor da barra de progresso */
@@ -24,8 +21,6 @@
       animation: progressAnimation 1.4s infinite linear; /* Animação para a barra de progresso */
       border-radius: 5px; /* Borda arredondada na barra de progresso */
     }
-
-    /* Animação para a barra de progresso */
     @keyframes progressAnimation {
       0% {
         width: 0;
@@ -42,3 +37,5 @@
   </div>
 </body>
 </html>
+
+
