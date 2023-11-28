@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fila de Espera</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .queue-container {
+            text-align: center;
+            height: 90px;
+            display: flex;
+            align-items: center;
+        }
+
+        .person {
+            font-size: 2em;
+            margin: 0 5px;
+            color: white;
+            background-color: #3498db;
+            border-radius: 50%;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            animation: pulse 1s infinite;
+        }
+
+        .person::after {
+            content: attr(data-counter);
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: red;
+            color: white;
+            font-size: 0.8em;
+            padding: 3px 5px;
+            border-radius: 5px;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .message {
+            font-size: 1em;
+            color: black;
+            margin-top: 10px;
+        }
+
+        .redirect-message {
+            font-size: 1.2em;
+            color: green;
+            margin-top: 10px;
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            body {
+                flex-direction: row;
+            }
+
+            .message {
+                margin-top: 0;
+                margin-left: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="queue-container">
+        <div class="person" id="queue" data-counter="5"><i class="fas fa-user"></i></div>
+        <div class="message" id="message">
+            Você está na fila de espera virtual, aguarde!
+        </div>
+        <div class="redirect-message" id="redirectMessage">
+            Redirecionando para atendente virtual
+        </div>
+    </div>
+
+    <script>
+        function updateQueue() {
+            const queueElement = document.getElementById('queue');
+            const messageElement = document.getElementById('message');
+            const redirectMessage = document.getElementById('redirectMessage');
+            let counter = parseInt(queueElement.getAttribute('data-counter'));
+
+            if (counter > 1) {
+                counter -= Math.floor(Math.random() * 2) + 1; // Diminui de 1 ou 2 aleatoriamente
+                queueElement.setAttribute('data-counter', counter);
+                setTimeout(updateQueue, Math.floor(Math.random() * 2000) + 1000); // Atualiza a cada 1 a 3 segundos
+            } else {
+                setTimeout(() => {
+                    queueElement.classList.add('hidden');
+                    queueElement.setAttribute('data-counter', '1');
+                    messageElement.classList.add('hidden');
+                    redirectMessage.style.display = 'block';
+                }, 0); // Agora o tempo é 0 para garantir que só há uma pessoa após 9 segundos
+            }
+        }
+
+        setTimeout(updateQueue, 9000);
+    </script>
+</body>
+</html>
