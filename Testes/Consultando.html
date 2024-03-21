@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #loading-message, #success-message {
+            font-size: 18px;
+            width: 200px;
+            text-align: center;
+            padding: 10px;
+            border: 2px solid black; /* Alteração: aumento da espessura e cor da borda */
+            border-radius: 5px;
+            margin: 5px;
+        }
+
+        #loading-message {
+            color: black; /* Alteração: mudança da cor do texto para preto */
+        }
+
+        #success-message {
+            display: none;
+            color: green;
+        }
+    </style>
+    <title>Simulação de Login</title>
+</head>
+<body>
+    <div id="loading-message">Aguarde! Consultando dados...</div>
+    <div id="success-message">Consulta realizada com sucesso!</div> <!-- Alteração: texto modificado -->
+
+    <script>
+        // Simulação de carregamento
+        setTimeout(function () {
+            document.getElementById('loading-message').style.display = 'none';
+            document.getElementById('success-message').style.display = 'block';
+        }, 4000);
+    </script>
+</body>
+</html>
