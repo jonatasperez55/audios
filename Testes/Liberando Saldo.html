@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loading Screen</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #f0f0f0;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    .loader {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 10px solid black;
+      border-top-color: transparent;
+      animation: spin 2s linear infinite;
+      margin: 0 auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .status {
+      margin-top: 20px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .orange-text {
+      color: orange;
+    }
+
+    .green-text {
+      color: green;
+    }
+
+    .success-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center; /* Centraliza na vertical */
+    }
+
+    .success-image {
+      display: none;
+      width: 100px;
+      height: 100px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="loader"></div>
+    <div class="success-container">
+      <img src="https://static.vecteezy.com/system/resources/previews/010/144/900/non_2x/check-mark-icon-sign-symbol-design-free-png.png" class="success-image">
+      <div class="status orange-text">Liberando valor de empréstimo...</div>
+    </div>
+  </div>
+  <script>
+    setTimeout(function() {
+      document.querySelector('.status').textContent = "Aguarde, gerando comprovante...";
+      document.querySelector('.status').classList.remove('orange-text');
+      document.querySelector('.status').classList.add('orange-text');
+    }, 5000);
+
+    setTimeout(function() {
+      document.querySelector('.status').textContent = "Saldo disponível em conta!";
+      document.querySelector('.status').classList.remove('orange-text');
+      document.querySelector('.status').classList.add('green-text');
+      document.querySelector('.loader').style.display = "none";
+      document.querySelector('.success-image').style.display = "block";
+    }, 7000);
+  </script>
+</body>
+</html>
