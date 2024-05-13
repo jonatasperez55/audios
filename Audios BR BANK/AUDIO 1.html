@@ -12,8 +12,14 @@
       height: 100vh;
       overflow: hidden;
       margin: 0px;
-      background-color: #FF0000; /* Altere a cor de fundo conforme desejado */
     }    
+
+    .content-container {
+      background-color: #FF0000; /* Cor de fundo vermelha */
+      padding: 20px; /* Adicione preenchimento para espaçamento interno */
+      border-radius: 15px; /* Arredonda as bordas */
+      margin: 10px; /* Adiciona espaçamento ao redor do contêiner */
+    }
 
     .audio-container {
       display: flex;
@@ -55,15 +61,15 @@
       background: rgba(0, 0, 0, 0);
       background: var(--plyr-audio-control-background-hover, var(--plyr-color-main, var(--plyr-color-main, rgba(0, 0, 0, 0))));
       color: rgba(0, 0, 0, 0);
-      color: var(--plyr-audio-control-color-hover, #c2c2c2)
+      color: var(--plyr-audio-control-color-hover, #dddddd)
     }
 
     .plyr--audio .plyr__controls {
-      background: rgba(255, 255, 255, 0);
+      background: rgba(0, 0, 0, 0);
       background: var(--plyr-audio-controls-background, rgba(0, 0, 0, 0));
       border-radius: inherit;
       color: #ffffff;
-      color: var(--plyr-audio-control-color,#ffffff);
+      color: var(--plyr-audio-control-color,#fcfcfc);
       margin-left: 0px;
     }
 
@@ -75,8 +81,8 @@
       -webkit-appearance: none;
       border: 0;
       border-radius: 100%;
-      box-shadow: 0 1px 1px rgba(255, 255, 255, 0.15),0 0 0 1px rgba(255, 255, 255, 0.2);
-      box-shadow: var(--plyr-range-thumb-shadow,0 1px 1px rgba(255, 255, 255, 0.15),0 0 0 1px rgba(35,40,47,.2));
+      box-shadow: 0 1px 1px rgba(35,40,47,.15),0 0 0 1px rgba(35,40,47,.2);
+      box-shadow: var(--plyr-range-thumb-shadow,0 1px 1px rgba(35,40,47,.15),0 0 0 1px rgba(35,40,47,.2));
       height: 13px;
       height: var(--plyr-range-thumb-height,13px);
       margin-top: -4px;
@@ -119,13 +125,15 @@
   </style>
 </head>
 <body>
-  <div class="audio-container" id="audioContainer">
-    <!-- Cole o link do Seu áudio Abaixo-->
-    <audio class="plyr" src="https://tarotcomamor.com/audios/Audio%201.mp3"></audio>
-    <!-- Cole o link da Sua imagem Abaixo-->
-    <img src="https://i.postimg.cc/rpTrDbNz/retrato-de-uma-jovem-linda-modelo-de-pe-e-sorrindo-para-a-camera-foto-de-alta-qualidade-144627-75055.jpg" alt="Imagem">
-    <div class="microphone-icon">
-      <i class="fas fa-microphone"></i>
+  <div class="content-container">
+    <div class="audio-container" id="audioContainer">
+      <!-- Cole o link do Seu áudio Abaixo-->
+      <audio class="plyr" src="https://tarotcomamor.com/audios/Audio%201.mp3"></audio>
+      <!-- Cole o link da Sua imagem Abaixo-->
+      <img src="https://i.postimg.cc/rpTrDbNz/retrato-de-uma-jovem-linda-modelo-de-pe-e-sorrindo-para-a-camera-foto-de-alta-qualidade-144627-75055.jpg" alt="Imagem">
+      <div class="microphone-icon">
+        <i class="fas fa-microphone"></i>
+      </div>
     </div>
   </div>
   
