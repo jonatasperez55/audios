@@ -12,6 +12,7 @@
       height: 100vh;
       overflow: hidden;
       margin: 0px;
+      background-color: #FF0000; /* Altere a cor de fundo conforme desejado */
     }    
 
     .audio-container {
@@ -29,6 +30,7 @@
       border-radius: 50%;
       object-fit: cover;
       padding-right: 8px;
+      background-color: transparent; /* Torna o fundo da imagem transparente */
     }
 
     .audio-container .microphone-icon {
@@ -44,7 +46,7 @@
     }
 
     .plyr--audio {
-      background-color: #FF0000; /* Altere a cor de fundo conforme desejado */
+      background-color: transparent; /* Torna o fundo do controle de áudio transparente */
     }
 
     .plyr--audio .plyr__control.plyr__tab-focus,
@@ -53,15 +55,15 @@
       background: rgba(0, 0, 0, 0);
       background: var(--plyr-audio-control-background-hover, var(--plyr-color-main, var(--plyr-color-main, rgba(0, 0, 0, 0))));
       color: rgba(0, 0, 0, 0);
-      color: var(--plyr-audio-control-color-hover, #797979)
+      color: var(--plyr-audio-control-color-hover, #c2c2c2)
     }
 
     .plyr--audio .plyr__controls {
-      background: rgba(0, 0, 0, 0);
+      background: rgba(255, 255, 255, 0);
       background: var(--plyr-audio-controls-background, rgba(0, 0, 0, 0));
       border-radius: inherit;
-      color: #4a5464;
-      color: var(--plyr-audio-control-color,#4a5464);
+      color: #ffffff;
+      color: var(--plyr-audio-control-color,#ffffff);
       margin-left: 0px;
     }
 
@@ -73,8 +75,8 @@
       -webkit-appearance: none;
       border: 0;
       border-radius: 100%;
-      box-shadow: 0 1px 1px rgba(35,40,47,.15),0 0 0 1px rgba(35,40,47,.2);
-      box-shadow: var(--plyr-range-thumb-shadow,0 1px 1px rgba(35,40,47,.15),0 0 0 1px rgba(35,40,47,.2));
+      box-shadow: 0 1px 1px rgba(255, 255, 255, 0.15),0 0 0 1px rgba(255, 255, 255, 0.2);
+      box-shadow: var(--plyr-range-thumb-shadow,0 1px 1px rgba(255, 255, 255, 0.15),0 0 0 1px rgba(35,40,47,.2));
       height: 13px;
       height: var(--plyr-range-thumb-height,13px);
       margin-top: -4px;
