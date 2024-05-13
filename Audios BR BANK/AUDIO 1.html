@@ -1,418 +1,178 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script type="text/javascript">
-        window.hasMobileFirstExtension = true;
-    </script>
+  <meta charset="UTF-8">
+  <title>Áudio</title>
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.6.7/plyr.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+      
+    body {
+      height: 100vh;
+      overflow: hidden;
+      margin: 0px;
+    }    
+
+    .audio-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: 'Open Sans', sans-serif;
+      justify-content: flex-start;
+      cursor: pointer; /* Adicione o cursor pointer para indicar que é clicável */
+    }
+
+    .audio-container img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      padding-right: 8px;
+    }
+
+    .audio-container .microphone-icon {
+      position: relative;
+      margin-left: -67px;
+      margin-bottom: -25px;
+      font-size: 22px;
+      color: #4ad954;
+    }
+
+    .audio-container .microphone-icon.blue {
+      color: #3db8ee;
+    }
+
+    .plyr--audio {
+      background-color: #FF0000; /* Altere a cor de fundo conforme desejado */
+    }
+
+    .plyr--audio .plyr__control.plyr__tab-focus,
+    .plyr--audio .plyr__control:hover,
+    .plyr--audio .plyr__control[aria-expanded=false] {
+      background: rgba(0, 0, 0, 0);
+      background: var(--plyr-audio-control-background-hover, var(--plyr-color-main, var(--plyr-color-main, rgba(0, 0, 0, 0))));
+      color: rgba(0, 0, 0, 0);
+      color: var(--plyr-audio-control-color-hover, #797979)
+    }
+
+    .plyr--audio .plyr__controls {
+      background: rgba(0, 0, 0, 0);
+      background: var(--plyr-audio-controls-background, rgba(0, 0, 0, 0));
+      border-radius: inherit;
+      color: #4a5464;
+      color: var(--plyr-audio-control-color,#4a5464);
+      margin-left: 0px;
+    }
+
+    .plyr--audio .plyr__control--overlaid .plyr__control__icon {
+      font-size: 33px;
+    }
+
+    .plyr--full-ui input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      border: 0;
+      border-radius: 100%;
+      box-shadow: 0 1px 1px rgba(35,40,47,.15),0 0 0 1px rgba(35,40,47,.2);
+      box-shadow: var(--plyr-range-thumb-shadow,0 1px 1px rgba(35,40,47,.15),0 0 0 1px rgba(35,40,47,.2));
+      height: 13px;
+      height: var(--plyr-range-thumb-height,13px);
+      margin-top: -4px;
+      margin-top: calc(var(--plyr-range-thumb-height,13px)/2*-1 - var(--plyr-range-track-height,5px)/2*-1);
+      position: relative;
+      -webkit-transition: all .2s ease;
+      transition: all .2s ease;
+      width: 13px;
+      width: var(--plyr-range-thumb-height,13px);
+      background: var(--range-thumb-background, #4ad954);
+    }  
+
+    .plyr--full-ui input[type=range].blue::-webkit-slider-thumb {
+      background: var(--range-thumb-background-active, #3db8ee);
+    }
+  
+    .hide {
+      display: none;
+    }
+
+    .plyr__controls .plyr__controls__item.plyr__progress__container:first-child,
+    .plyr__controls .plyr__controls__item.plyr__time+.plyr__time,
+    .plyr__controls .plyr__controls__item.plyr__time:first-child {
+      padding-left: 0;
+      display: block;
+      margin-left: 7.5px;
+    }
+
+    .plyr__time+.plyr__time:before {
+      content: "";
+      margin-right: var(--plyr-control-spacing);
+    }
+
+    /* Ocultar os controles de tempo */
+    .plyr--audio .plyr__controls .plyr__controls__item.plyr__time--current.hide,
+    .plyr--audio .plyr__controls .plyr__controls__item.plyr__time--duration.hide {
+      display: none;
+    }
+
+  </style>
 </head>
 <body>
-    <div id="audio-player" class="audio-player mine info" style="--player-current-date-time: &#39;15:07&#39;;">
-        <div class="user">
-            <img id="audio-avatar" src="https://i.postimg.cc/rpTrDbNz/retrato-de-uma-jovem-linda-modelo-de-pe-e-sorrindo-para-a-camera-foto-de-alta-qualidade-144627-75055.jpg">
-            <span class="material-icons">mic</span>
-        </div>
-        <div class="player">
-            <button type="button" class="btn-play">
-                <span id="play-button" class="material-icons icon-play">play_arrow</span>
-                <span class="material-icons icon-pause">pause</span>
-                <span class="material-icons icon-loop">loop</span>
-            </button>
-            <div class="timeline">
-                <div class="line">
-                    <input dir="ltr" type="range" min="0" max="100" value="0">
-                </div>
-                <div class="data">
-                    <div class="current-time"></div>
-                    <div class="time">
-                        <span class="material-icons">done_all</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <div class="audio-container" id="audioContainer">
+    <!-- Cole o link do Seu áudio Abaixo-->
+    <audio class="plyr" src="https://s3.typebot.io/public/workspaces/clkoif4z90032ld0fp2byoeph/typebots/cltdd2y8h002p2nv68s1axunb/blocks/n28jf9yovr3t0con36e533cm?v=1709582170290"></audio>
+    <!-- Cole o link da Sua imagem Abaixo-->
+    <img src="https://i.postimg.cc/N0KpLQWy/Design-sem-nome-2.png" alt="Imagem">
+    <div class="microphone-icon">
+      <i class="fas fa-microphone"></i>
     </div>
+  </div>
+  
+  <script src="https://cdn.plyr.io/3.6.7/plyr.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const player = new Plyr('.plyr', {
+        controls: ['play', 'progress', 'current-time', 'duration']
+      });
 
-    <script>
-        (function() {
-            const url = new URL(window.location.href);
-            const audio_url = 'https://tarotcomamor.com/audios/Audio%201.mp3';
-            const avatar_url = 'https://i.postimg.cc/rpTrDbNz/retrato-de-uma-jovem-linda-modelo-de-pe-e-sorrindo-para-a-camera-foto-de-alta-qualidade-144627-75055.jpg';
+      const audioElement = document.querySelector('.plyr');
+      const currentTimeElement = document.querySelector('.plyr__time--current');
+      const durationElement = document.querySelector('.plyr__time--duration');
+      const microphoneIcon = document.querySelector('.microphone-icon');
 
-            const audioPlayer = document.getElementById('audio-player');
-            const avatar = document.getElementById('audio-avatar');
+      currentTimeElement.classList.add('hide'); // Adiciona a classe 'hide' ao iniciar
 
-            avatar.src = avatar_url;
+      audioElement.addEventListener('play', function() {
+        currentTimeElement.classList.remove('hide');
+        durationElement.classList.add('hide');
+        microphoneIcon.classList.add('blue'); // Adiciona a classe 'blue' para alterar a cor do ícone
+        audioElement.classList.add('blue'); // Adiciona a classe 'blue' para alterar o background do controle deslizante
+        audioElement.style.setProperty('--range-thumb-background', '#3db8ee');
+      });
 
-            const audio = new Audio(audio_url);
-            audio.autoplay = true;
+      audioElement.addEventListener('pause', function() {
+        currentTimeElement.classList.add('hide');
+        durationElement.classList.remove('hide');
+      });
 
-            const btnPlayToggle = document.querySelector('.btn-play');
-            const slider = document.querySelector('input[type="range"]');
+      const audioContainer = document.getElementById('audioContainer');
+      audioContainer.addEventListener('click', function() {
+        const playButton = audioContainer.querySelector('.plyr__controls button[data-plyr="play"]');
+        playButton.click();
+      });
 
-            function setMessageDate() {
-                const agora = new Date();
-                const hora = agora.getHours().toString().padStart(2, '0');
-                const minuto = agora.getMinutes().toString().padStart(2, '0');
-                audioPlayer.style.setProperty('--player-current-date-time', `'${hora}:${minuto}'`);
-            }
+      const playPauseButton = document.getElementById('audioContainer').querySelector('.plyr__controls button[data-plyr="play"]');
+      const audioBox = document.querySelector('.audio-box');
+      playPauseButton.addEventListener('click', function() {
+        const playButton = audioContainer.querySelector('.plyr__controls button[data-plyr="play"]');
+        playButton.click();
+      });
 
-            function handlePlayButton() {
-                if (audio.paused) {
-                    audio.play().catch(error => {
-                        console.error('Erro ao reproduzir áudio:', error.message);
-                    });
-                } else {
-                    audio.pause();
-                }
-            }
-
-            function handleSlider(event) {
-                let { duration } = audio;
-                let percentage = (event.target.value * duration / 100).toFixed(2);
-                audio.currentTime = percentage;
-            }
-
-            function updateCurrentTimeDisplay(timeInSeconds) {
-                const currentTime = new Date(timeInSeconds * 1000).toISOString().substring(14, 19);
-                audioPlayer.style.setProperty('--player-current-time', "'" + currentTime + "'");
-            }
-
-            function updateCurrentPercent() {
-                let { currentTime, duration } = audio;
-                let percentagePlayed = (100 * currentTime / duration).toFixed(2);
-                slider.value = percentagePlayed;
-                audioPlayer.style.setProperty('--player-percent-played', percentagePlayed + '%');
-            }
-
-            function showTimeDuration() {
-                let { duration } = audio;
-                let formattedDuration = new Date(duration * 1000).toISOString().substring(14, 19);
-                updateCurrentTimeDisplay(formattedDuration);
-            }
-
-            function start() {
-                setMessageDate();
-
-                btnPlayToggle.onclick = handlePlayButton;
-                slider.oninput = handleSlider;
-
-                audio.ontimeupdate = () => {
-                    updateCurrentTimeDisplay(audio.currentTime);
-                    updateCurrentPercent();
-                    if (audio.currentTime === 0) {
-                        showTimeDuration();
-                    }
-                };
-
-                audio.onended = () => {
-                    audioPlayer.classList.remove('playing');
-                };
-
-                audio.onpause = () => {
-                    audioPlayer.classList.remove('playing');
-                };
-
-                audio.onplay = () => {
-                    audioPlayer.classList.add('playing');
-                };
-            }
-
-            start();
-        })();
-
-    </script>
-
-    <style>
-        @font-face {
-            font-family: 'Material Icons';
-            font-style: normal;
-            font-weight: 400;
-            src: url(fonts/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format('woff2');
-        }
-
-        .material-icons {
-            font-family: 'Material Icons';
-            font-weight: normal;
-            font-style: normal;
-            font-size: 24px;
-            line-height: 1;
-            letter-spacing: normal;
-            text-transform: none;
-            display: inline-block;
-            white-space: nowrap;
-            word-wrap: normal;
-            direction: ltr;
-            -webkit-font-feature-settings: 'liga';
-            -webkit-font-smoothing: antialiased;
-        }
-
-        :root {
-            --bg-color: #1b1b22;
-            --green: #00e5c0;
-            --body-font-family: "Poppins", sans-serif;
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            padding: 0 !important;
-            height: min-content !important;
-            width: 100% !important;
-            display: grid;
-            place-items: center;
-            place-content: center;
-            text-align: center;
-            background: #fff !important;
-            color: #fff !important;
-            box-sizing: border-box;
-            font-size: 16px;
-            overflow: hidden !important;
-        }
-
-        /* Player de Ã¡udio */
-        .audio-player {
-            --player-color-featured: #ffffff !important;
-            --player-color-background: #FF0000 !important;
-            --player-color-text: #ffffff !important;
-            --player-percent-played: 0;
-            --player-current-time: "00:00";
-            --player-current-date-time: "00:00";
-
-            background: var(--player-color-background);
-            display: inline-flex;
-            width: 100vw !important;
-            border-radius: 0.4rem;
-            padding: 0.4rem;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-            user-select: none;
-            font-family: Arial, sans-serif;
-        }
-
-        .audio-player + .audio-player {
-            margin-top: 1rem;
-        }
-
-        .audio-player .player {
-            flex: 1;
-            display: flex;
-        }
-
-        .audio-player .player .btn-play {
-            outline: none;
-            appearance: none;
-            cursor: pointer;
-            background: none;
-            border: 0;
-            padding: 0 0.8rem 0 0.4rem;
-        }
-
-        .audio-player .player .btn-play:disabled {
-            cursor: default;
-        }
-
-        .audio-player .player .btn-play span {
-            color: var(--player-color-text);
-            font-size: 38px;
-            opacity: 0.8;
-        }
-
-        .audio-player .player .btn-play span:not(.icon-play),
-        .audio-player.playing .player .btn-play span:not(.icon-pause),
-        .audio-player.loading .player .btn-play span:not(.icon-loop) {
-            display: none;
-        }
-
-        .audio-player.playing .player .btn-play .icon-pause {
-            display: inline-block;
-        }
-
-        @keyframes load {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        .audio-player.loading .player .btn-play {
-            pointer-events: none;
-        }
-
-        .audio-player.loading .player .btn-play span {
-            animation: load 1s linear infinite;
-        }
-
-        .audio-player.loading .player .btn-play .icon-loop {
-            display: inline-block;
-        }
-
-        .audio-player .player .timeline {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            padding-bottom: 0.2rem;
-        }
-
-        .audio-player .player .timeline .line {
-            --line-height: 0.24rem;
-
-            flex: 1;
-            display: flex;
-            align-items: center;
-            position: relative;
-        }
-
-        .audio-player .player .timeline .line:before {
-            content: "";
-            width: var(--player-percent-played);
-            position: absolute;
-            background: var(--player-color-featured);
-            height: var(--line-height);
-            border-radius: calc(var(--line-height) / 2);
-        }
-
-        .audio-player .player .timeline .line input[type="range"] {
-            flex: 1;
-            all: unset;
-            appearance: none;
-            background-color: initial !important;
-            border: none;
-            outline: none;
-            width: 100%;
-            position: relative;
-        }
-
-        .audio-player .player .timeline .line input[type="range"]::-webkit-slider-thumb {
-            appearance: none;
-            background: var(--player-color-featured);
-            width: 0.9rem;
-            height: 0.9rem;
-            border-radius: 50%;
-            margin-top: calc(var(--line-height) * -1.4);
-        }
-
-        .audio-player .player .timeline .line input[type="range"]::-moz-range-thumb {
-            unset: all;
-            appearance: none;
-            border: 0;
-            background: var(--player-color-featured);
-            width: 0.9rem;
-            height: 0.9rem;
-            border-radius: 50%;
-            margin-top: calc(var(--line-height) * -1.4);
-        }
-
-        .audio-player .player .timeline .line input[type="range"]::-ms-thumb {
-            appearance: none;
-            background: var(--player-color-featured);
-            width: 0.9rem;
-            height: 0.9rem;
-            border-radius: 50%;
-            margin-top: calc(var(--line-height) * -1.4);
-        }
-
-        .audio-player .player .timeline .line input[type="range"]::-webkit-slider-runnable-track {
-            background: rgba(255, 255, 255, 0.2);
-            height: var(--line-height);
-            border-radius: calc(var(--line-height) / 2);
-        }
-
-        .audio-player .player .timeline .line input[type="range"]::-moz-range-track {
-            background: rgba(255, 255, 255, 0.2);
-            height: var(--line-height);
-            border-radius: calc(var(--line-height) / 2);
-        }
-
-        .audio-player .player .timeline .line input[type="range"]::-ms-track {
-            background: rgba(255, 255, 255, 0.2);
-            height: var(--line-height);
-            border-radius: calc(var(--line-height) / 2);
-        }
-
-        .audio-player .player .timeline .data {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 0.68rem;
-            color: var(--player-color-text);
-            position: absolute;
-            width: 100%;
-            bottom: 0;
-        }
-
-        .audio-player .player .timeline .data .current-time::before {
-            content: var(--player-current-time);
-        }
-
-        .audio-player .player .timeline .data .time {
-            display: flex;
-            align-items: center;
-        }
-
-        .audio-player .player .timeline .data .time::before {
-            content: var(--player-current-date-time);
-        }
-
-        .audio-player .player .timeline .data .time span {
-            font-size: 1rem;
-            margin-left: 0.4rem;
-            color: var(--player-color-featured);
-        }
-
-        .audio-player .user {
-            position: relative;
-            width: 55px;
-            height: 55px;
-            margin-left: 1.4rem;
-        }
-
-        .audio-player .user img {
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-            object-fit: cover;
-            background: rgba(255, 255, 255, 0.01);
-        }
-
-        .audio-player .user span {
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            color: var(--player-color-featured);
-            transform: translateX(-50%);
-            font-size: 1.6rem;
-            text-shadow: -1px -1px 0 var(--player-color-background),
-                1px -1px 0 var(--player-color-background),
-                -1px 1px 0 var(--player-color-background),
-                1px 1px 0 var(--player-color-background);
-        }
-
-        /* Ãudio enviado */
-        .audio-player.mine {
-            --player-color-background: #056162;
-        }
-
-        .audio-player.mine .user {
-            margin-left: 0;
-        }
-
-        .audio-player.mine .player {
-            margin-right: 0.8rem;
-        }
-
-        .audio-player.mine .player .btn-play {
-            padding: 0 0.8rem;
-        }
-
-        .audio-player.mine .user span {
-            right: 0;
-            left: auto;
-            transform: translateX(50%);
-        }
-
-    </style>
+      audioBox.addEventListener('click', function(event) {
+        event.stopPropagation(); 
+        const playButton = audioContainer.querySelector('.plyr__controls button[data-plyr="play"]');
+        playButton.click();
+      });
+    });
+  </script>
 </body>
 </html>
