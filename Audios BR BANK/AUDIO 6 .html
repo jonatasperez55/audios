@@ -2,173 +2,337 @@
 <html>
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Áudio</title>
-  <link rel="stylesheet" href="https://cdn.plyr.io/3.6.7/plyr.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
-      
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
       height: 100vh;
       overflow: hidden;
-      margin: 0px;
-    }    
-
-    .audio-container {
+      margin: 0;
+      background: transparent;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      font-family: 'Open Sans', sans-serif;
-      justify-content: flex-start;
-      cursor: pointer; /* Adicione o cursor pointer para indicar que é clicável */
+      justify-content: center;
     }
 
-    .audio-container img {
-      width: 50px;
-      height: 50px;
+    .wpp-audio {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 8px 6px 6px;
+      font-family: 'Inter', sans-serif;
+      width: 100%;
+      max-width: 360px;
+      user-select: none;
+    }
+
+    /* Botão Play/Pause */
+    .wpp-audio__play-btn {
+      width: 36px;
+      height: 36px;
+      min-width: 36px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      outline: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .wpp-audio__play-btn svg {
+      width: 28px;
+      height: 28px;
+      fill: #ffffff;
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.15));
+    }
+
+    /* Área central: waveform + tempo */
+    .wpp-audio__center {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    /* Slider customizado */
+    .wpp-audio__slider-wrap {
+      position: relative;
+      width: 100%;
+      height: 24px;
+      display: flex;
+      align-items: center;
+    }
+
+    .wpp-audio__slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 4px;
+      border-radius: 2px;
+      background: rgba(255, 255, 255, 0.35);
+      outline: none;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .wpp-audio__slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #ffffff;
+      cursor: pointer;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+      position: relative;
+      z-index: 2;
+    }
+
+    .wpp-audio__slider::-moz-range-thumb {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #ffffff;
+      cursor: pointer;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+      border: none;
+    }
+
+    .wpp-audio__slider::-webkit-slider-runnable-track {
+      height: 4px;
+      border-radius: 2px;
+    }
+
+    /* Tempo */
+    .wpp-audio__time {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.85);
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      line-height: 1;
+      padding-left: 2px;
+    }
+
+    /* Foto de perfil com ícone de microfone */
+    .wpp-audio__avatar {
+      position: relative;
+      width: 46px;
+      height: 46px;
+      min-width: 46px;
+      margin-left: 4px;
+    }
+
+    .wpp-audio__avatar img {
+      width: 46px;
+      height: 46px;
       border-radius: 50%;
       object-fit: cover;
-      padding-right: 8px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
     }
 
-    .audio-container .microphone-icon {
-      position: relative;
-      margin-left: -67px;
-      margin-bottom: -25px;
-      font-size: 22px;
-      color: #4ad954;
+    .wpp-audio__mic {
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      width: 20px;
+      height: 20px;
+      background: #00a884;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1.5px solid rgba(255, 255, 255, 0.4);
     }
 
-    .audio-container .microphone-icon.blue {
-      color: #3db8ee;
+    .wpp-audio__mic svg {
+      width: 11px;
+      height: 11px;
+      fill: #ffffff;
     }
 
-    .plyr--audio .plyr__control.plyr__tab-focus,
-    .plyr--audio .plyr__control:hover,
-    .plyr--audio .plyr__control[aria-expanded=false] {
-      background: rgba(0, 0, 0, 0);
-      background: var(--plyr-audio-control-background-hover, var(--plyr-color-main, var(--plyr-color-main, rgba(0, 0, 0, 0))));
-      color: rgba(0, 0, 0, 0);
-      color: var(--plyr-audio-control-color-hover, #797979)
+    /* Estado playing */
+    .wpp-audio.playing .wpp-audio__mic {
+      background: #53bdeb;
     }
 
-    .plyr--audio .plyr__controls {
-      background: rgba(0, 0, 0, 0);
-      background: var(--plyr-audio-controls-background, rgba(0, 0, 0, 0));
-      border-radius: inherit;
-      color: #4a5464;
-      color: var(--plyr-audio-control-color,#4a5464);
-      margin-left: 0px;
+    /* Velocidade */
+    .wpp-audio__speed {
+      font-size: 10px;
+      font-weight: 600;
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      border-radius: 10px;
+      padding: 2px 6px;
+      cursor: pointer;
+      outline: none;
+      min-width: 30px;
+      text-align: center;
+      -webkit-tap-highlight-color: transparent;
+      line-height: 1.4;
     }
 
-    .plyr--audio .plyr__control--overlaid .plyr__control__icon {
-      font-size: 33px;
+    .wpp-audio__speed:hover {
+      background: rgba(255, 255, 255, 0.3);
     }
-
-    .plyr--full-ui input[type=range]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      border: 0;
-      border-radius: 100%;
-      box-shadow: 0 1px 1px rgba(35,40,47,.15),0 0 0 1px rgba(35,40,47,.2);
-      box-shadow: var(--plyr-range-thumb-shadow,0 1px 1px rgba(35,40,47,.15),0 0 0 1px rgba(35,40,47,.2));
-      height: 13px;
-      height: var(--plyr-range-thumb-height,13px);
-      margin-top: -4px;
-      margin-top: calc(var(--plyr-range-thumb-height,13px)/2*-1 - var(--plyr-range-track-height,5px)/2*-1);
-      position: relative;
-      -webkit-transition: all .2s ease;
-      transition: all .2s ease;
-      width: 13px;
-      width: var(--plyr-range-thumb-height,13px);
-      background: var(--range-thumb-background, #4ad954);
-    }  
-
-    .plyr--full-ui input[type=range].blue::-webkit-slider-thumb {
-      background: var(--range-thumb-background-active, #3db8ee);
-    }
-  
-    .hide {
-      display: none;
-    }
-
-    .plyr__controls .plyr__controls__item.plyr__progress__container:first-child,
-    .plyr__controls .plyr__controls__item.plyr__time+.plyr__time,
-    .plyr__controls .plyr__controls__item.plyr__time:first-child {
-      padding-left: 0;
-      display: block;
-      margin-left: 7.5px;
-    }
-
-    .plyr__time+.plyr__time:before {
-      content: "";
-      margin-right: var(--plyr-control-spacing);
-    }
-
-    /* Ocultar os controles de tempo */
-    .plyr--audio .plyr__controls .plyr__controls__item.plyr__time--current.hide,
-    .plyr--audio .plyr__controls .plyr__controls__item.plyr__time--duration.hide {
-      display: none;
-    }
-
   </style>
 </head>
 <body>
-  <div class="audio-container" id="audioContainer">
-    <!-- Cole o link do Seu áudio Abaixo-->
-    <audio class="plyr" src="https://s3.typebot.io/public/workspaces/clkoif4z90032ld0fp2byoeph/typebots/cltdd2y8h002p2nv68s1axunb/blocks/rmp2lurqbqosq7w25o5szuyb?v=1709586338701"></audio>
-    <!-- Cole o link da Sua imagem Abaixo-->
-    <img src="https://i.postimg.cc/N0KpLQWy/Design-sem-nome-2.png" alt="Imagem">
-    <div class="microphone-icon">
-      <i class="fas fa-microphone"></i>
+  <div class="wpp-audio" id="wppAudio">
+    <!-- Play/Pause -->
+    <button class="wpp-audio__play-btn" id="playBtn" aria-label="Play">
+      <svg id="iconPlay" viewBox="0 0 24 24">
+        <path d="M8 5v14l11-7z"/>
+      </svg>
+      <svg id="iconPause" viewBox="0 0 24 24" style="display:none;">
+        <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+      </svg>
+    </button>
+
+    <!-- Centro: slider + tempo -->
+    <div class="wpp-audio__center">
+      <div class="wpp-audio__slider-wrap">
+        <input type="range" class="wpp-audio__slider" id="slider" min="0" max="100" value="0" step="0.1">
+      </div>
+      <div class="wpp-audio__time">
+        <span id="timeDisplay">0:00</span>
+      </div>
+    </div>
+
+    <!-- Velocidade -->
+    <button class="wpp-audio__speed" id="speedBtn">1x</button>
+
+    <!-- Avatar com microfone -->
+    <div class="wpp-audio__avatar">
+      <!-- COLE O LINK DA SUA FOTO AQUI -->
+      <img src="https://i.postimg.cc/vHq8TR5K/perfil.jpg" alt="Perfil">
+      <div class="wpp-audio__mic">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm-1-9c0-.55.45-1 1-1s1 .45 1 1v6c0 .55-.45 1-1 1s-1-.45-1-1V5zm6 6c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+        </svg>
+      </div>
     </div>
   </div>
-  
-  <script src="https://cdn.plyr.io/3.6.7/plyr.js"></script>
+
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const player = new Plyr('.plyr', {
-        controls: ['play', 'progress', 'current-time', 'duration']
+    (function() {
+      // COLE O LINK DO SEU ÁUDIO AQUI
+      const AUDIO_URL = 'https://s3.typebot.io/public/workspaces/clkoif4z90032ld0fp2byoeph/typebots/cltdd2y8h002p2nv68s1axunb/blocks/rmp2lurqbqosq7w25o5szuyb?v=1709586338701';
+
+      const audio = new Audio(AUDIO_URL);
+      audio.preload = 'metadata';
+
+      const container = document.getElementById('wppAudio');
+      const playBtn = document.getElementById('playBtn');
+      const iconPlay = document.getElementById('iconPlay');
+      const iconPause = document.getElementById('iconPause');
+      const slider = document.getElementById('slider');
+      const timeDisplay = document.getElementById('timeDisplay');
+      const speedBtn = document.getElementById('speedBtn');
+
+      const speeds = [1, 1.5, 2];
+      let speedIndex = 0;
+      let isUserSeeking = false;
+
+      function formatTime(sec) {
+        if (isNaN(sec) || sec < 0) return '0:00';
+        const m = Math.floor(sec / 60);
+        const s = Math.floor(sec % 60);
+        return m + ':' + (s < 10 ? '0' : '') + s;
+      }
+
+      function updateSliderBackground(value) {
+        const pct = value + '%';
+        slider.style.background = 'linear-gradient(to right, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.9) ' + pct + ', rgba(255,255,255,0.3) ' + pct + ', rgba(255,255,255,0.3) 100%)';
+      }
+
+      // Mostrar duração ao carregar
+      audio.addEventListener('loadedmetadata', function() {
+        timeDisplay.textContent = formatTime(audio.duration);
       });
 
-      const audioElement = document.querySelector('.plyr');
-      const currentTimeElement = document.querySelector('.plyr__time--current');
-      const durationElement = document.querySelector('.plyr__time--duration');
-      const microphoneIcon = document.querySelector('.microphone-icon');
-
-      currentTimeElement.classList.add('hide'); // Adiciona a classe 'hide' ao iniciar
-
-      audioElement.addEventListener('play', function() {
-        currentTimeElement.classList.remove('hide');
-        durationElement.classList.add('hide');
-        microphoneIcon.classList.add('blue'); // Adiciona a classe 'blue' para alterar a cor do ícone
-        audioElement.classList.add('blue'); // Adiciona a classe 'blue' para alterar o background do controle deslizante
-        audioElement.style.setProperty('--range-thumb-background', '#3db8ee');
+      // Play / Pause
+      playBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (audio.paused) {
+          audio.play();
+        } else {
+          audio.pause();
+        }
       });
 
-      audioElement.addEventListener('pause', function() {
-        currentTimeElement.classList.add('hide');
-        durationElement.classList.remove('hide');
+      audio.addEventListener('play', function() {
+        iconPlay.style.display = 'none';
+        iconPause.style.display = 'block';
+        container.classList.add('playing');
       });
 
-      const audioContainer = document.getElementById('audioContainer');
-      audioContainer.addEventListener('click', function() {
-        const playButton = audioContainer.querySelector('.plyr__controls button[data-plyr="play"]');
-        playButton.click();
+      audio.addEventListener('pause', function() {
+        iconPlay.style.display = 'block';
+        iconPause.style.display = 'none';
+        container.classList.remove('playing');
       });
 
-      const playPauseButton = document.getElementById('audioContainer').querySelector('.plyr__controls button[data-plyr="play"]');
-      const audioBox = document.querySelector('.audio-box');
-      playPauseButton.addEventListener('click', function() {
-        const playButton = audioContainer.querySelector('.plyr__controls button[data-plyr="play"]');
-        playButton.click();
+      // Atualizar progresso
+      audio.addEventListener('timeupdate', function() {
+        if (!isUserSeeking && audio.duration) {
+          const pct = (audio.currentTime / audio.duration) * 100;
+          slider.value = pct;
+          updateSliderBackground(pct);
+          timeDisplay.textContent = formatTime(audio.currentTime);
+        }
       });
 
-      audioBox.addEventListener('click', function(event) {
-        event.stopPropagation(); 
-        const playButton = audioContainer.querySelector('.plyr__controls button[data-plyr="play"]');
-        playButton.click();
+      // Ao terminar
+      audio.addEventListener('ended', function() {
+        slider.value = 0;
+        updateSliderBackground(0);
+        timeDisplay.textContent = formatTime(audio.duration);
+        iconPlay.style.display = 'block';
+        iconPause.style.display = 'none';
+        container.classList.remove('playing');
       });
-    });
+
+      // Slider: seek
+      slider.addEventListener('input', function() {
+        isUserSeeking = true;
+        const pct = parseFloat(slider.value);
+        updateSliderBackground(pct);
+        if (audio.duration) {
+          timeDisplay.textContent = formatTime((pct / 100) * audio.duration);
+        }
+      });
+
+      slider.addEventListener('change', function() {
+        if (audio.duration) {
+          audio.currentTime = (parseFloat(slider.value) / 100) * audio.duration;
+        }
+        isUserSeeking = false;
+      });
+
+      // Velocidade
+      speedBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        speedIndex = (speedIndex + 1) % speeds.length;
+        audio.playbackRate = speeds[speedIndex];
+        speedBtn.textContent = speeds[speedIndex] + 'x';
+      });
+
+      // Inicializar slider background
+      updateSliderBackground(0);
+    })();
   </script>
 </body>
 </html>
