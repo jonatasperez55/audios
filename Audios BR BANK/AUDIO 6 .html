@@ -53,8 +53,8 @@
     .wpp-audio__play-btn svg {
       width: 28px;
       height: 28px;
-      fill: #ffffff;
-      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.15));
+      fill: #54656f;
+      filter: drop-shadow(0 1px 1px rgba(0,0,0,0.08));
     }
 
     /* Área central: waveform + tempo */
@@ -81,7 +81,7 @@
       width: 100%;
       height: 4px;
       border-radius: 2px;
-      background: rgba(255, 255, 255, 0.35);
+      background: rgba(0, 0, 0, 0.15);
       outline: none;
       cursor: pointer;
       position: relative;
@@ -93,9 +93,9 @@
       width: 14px;
       height: 14px;
       border-radius: 50%;
-      background: #ffffff;
+      background: #54656f;
       cursor: pointer;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
       position: relative;
       z-index: 2;
       margin-top: -5px;
@@ -105,9 +105,9 @@
       width: 14px;
       height: 14px;
       border-radius: 50%;
-      background: #ffffff;
+      background: #54656f;
       cursor: pointer;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
       border: none;
     }
 
@@ -120,7 +120,7 @@
     /* Tempo */
     .wpp-audio__time {
       font-size: 11px;
-      color: rgba(255, 255, 255, 0.85);
+      color: #667781;
       font-weight: 500;
       letter-spacing: 0.3px;
       line-height: 1;
@@ -141,7 +141,7 @@
       height: 46px;
       border-radius: 50%;
       object-fit: cover;
-      border: 2px solid rgba(255, 255, 255, 0.3);
+      border: 2px solid rgba(0, 0, 0, 0.08);
     }
 
     .wpp-audio__mic {
@@ -155,7 +155,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 1.5px solid rgba(255, 255, 255, 0.4);
+      border: 1.5px solid #ffffff;
     }
 
     .wpp-audio__mic svg {
@@ -173,8 +173,8 @@
     .wpp-audio__speed {
       font-size: 10px;
       font-weight: 600;
-      color: #ffffff;
-      background: rgba(255, 255, 255, 0.2);
+      color: #54656f;
+      background: rgba(0, 0, 0, 0.08);
       border: none;
       border-radius: 10px;
       padding: 2px 6px;
@@ -187,7 +187,7 @@
     }
 
     .wpp-audio__speed:hover {
-      background: rgba(255, 255, 255, 0.3);
+      background: rgba(0, 0, 0, 0.14);
     }
   </style>
 </head>
@@ -257,7 +257,7 @@
 
       function updateSliderBackground(value) {
         const pct = value + '%';
-        slider.style.background = 'linear-gradient(to right, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.9) ' + pct + ', rgba(255,255,255,0.3) ' + pct + ', rgba(255,255,255,0.3) 100%)';
+        slider.style.background = 'linear-gradient(to right, #54656f 0%, #54656f ' + pct + ', rgba(0,0,0,0.15) ' + pct + ', rgba(0,0,0,0.15) 100%)';
       }
 
       // Mostrar duração ao carregar
